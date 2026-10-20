@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import numpy as np
 import pytest
 
 ezodf = pytest.importorskip("ezodf", reason="ODS import tests need the optional 'data' extra")
@@ -70,6 +71,50 @@ class TestBuildDataFromOds:
     # 8=isomer, 9=name_full, 10=species_id.
     _COL_REF = 3
     _COL_X = 4
+
+    @pytest.mark.parametrize("observable", ["frequency", "time"])
+    @pytest.mark.parametrize(
+        "width_values, expected",
+        [
+            ((), (np.nan, np.nan)),
+            ((12.5,), (12.5, np.nan)),
+            ((None, None), (np.nan, np.nan)),
+            ((" ", ""), (np.nan, np.nan)),
+            (("12,5", "0,4"), (12.5, 0.4)),
+        ],
+    )
+    def test_optional_width_metadata(self, tmp_path, observable, width_values, expected):
+        path = tmp_path / "optional_widths.ods"
+        values = ("204Pt78+", 1_500_000.0, 0.5, *width_values)
+        doc = ezodf.newdoc(doctype="ods", filename=str(path))
+        sheet = ezodf.Sheet("Measurements", size=(1, len(values)))
+        doc.sheets += sheet
+        for column, value in enumerate(values):
+            if value is not None:
+                sheet[0, column].set_value(value)
+        doc.save()
+
+        data, aux = build_data_from_ods(path, 0, header=False, harmonic=2, observable=observable, verbose=False)
+        scale = 0.5 if observable == "frequency" else 0.5e12 / 750_000.0**2
+        np.testing.assert_allclose(data[0, 6:8].astype(float), np.asarray(expected) * scale, equal_nan=True)
+        assert data.shape == (1, 11)
+        assert aux["f"][0] == 750_000.0
+        assert aux["fe"][0] == 0.25
+
+    @pytest.mark.parametrize("column", [1, 2])
+    def test_centroid_and_uncertainty_remain_required(self, tmp_path, column):
+        path = tmp_path / "missing_required_value.ods"
+        values = ["204Pt78+", 1_500_000.0, 0.5]
+        values[column] = None
+        doc = ezodf.newdoc(doctype="ods", filename=str(path))
+        sheet = ezodf.Sheet("Measurements", size=(1, 3))
+        doc.sheets += sheet
+        for index, value in enumerate(values):
+            if value is not None:
+                sheet[0, index].set_value(value)
+        doc.save()
+        with pytest.raises(ValueError, match="Could not convert value to float"):
+            build_data_from_ods(path, 0, header=False, verbose=False)
 
     def test_frequency_observable_default(self, synthetic_ods_file):
         data, aux = build_data_from_ods(filename=str(synthetic_ods_file), sheet_index=0, verbose=False)

@@ -144,8 +144,9 @@ def build_data_from_ods(
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """Read a template-fit ODS table and build the legacy ``data`` array.
 
-    Expected ODS columns: ``Label, mu_fit_Hz, mu_combined_sigma_Hz,
-    rms_width_Hz, [width_err_Hz]``.
+    Required ODS columns: ``Label, mu_fit_Hz, mu_combined_sigma_Hz``.
+    Optional fourth and fifth columns contain RMS width and its uncertainty.
+    Missing or blank widths are stored as NaN; they do not enter calibration.
 
     Parameters
     ----------
@@ -197,8 +198,8 @@ def build_data_from_ods(
         names.append(str(vals[0]))
         f.append(to_float_locale(vals[1]))
         fe.append(to_float_locale(vals[2]))
-        width.append(to_float_locale(vals[3]))
-        width_err.append(to_float_locale(vals[4]) if vals[4] not in (None, "") else np.nan)
+        for destination, value in ((width, vals[3]), (width_err, vals[4])):
+            destination.append(np.nan if value is None or not str(value).strip() else to_float_locale(value))
 
     f_arr = np.asarray(f, dtype=float)
     fe_arr = np.asarray(fe, dtype=float)

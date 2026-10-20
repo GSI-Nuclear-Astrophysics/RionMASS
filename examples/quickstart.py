@@ -44,9 +44,9 @@ def run_example(output: Path):
     electronic_path.write_text(json.dumps(inputs_json, indent=2) + "\n")
     ods_path = output / "illustrative_observables.ods"
     document = ezodf.newdoc(doctype="ods", filename=str(ods_path))
-    sheet = ezodf.Sheet("Illustrative", size=(len(records) + 1, 5))
+    sheet = ezodf.Sheet("Illustrative", size=(len(records) + 1, 3))
     document.sheets += sheet
-    header = ("Label", "mu_fit_Hz", "sigma_Hz", "width_Hz", "width_err_Hz")
+    header = ("Label", "mu_fit_Hz", "sigma_Hz")
     for column, value in enumerate(header):
         sheet[0, column].set_value(value)
     for row, record in enumerate(records, 1):
@@ -54,7 +54,7 @@ def run_example(output: Path):
         element = next(symbol for symbol, atomic_number in ELEMENT_Z.items() if atomic_number == z)
         moq = (a * amu + record["ME (keV)"] / 1000 - z * me + inputs.correction(z, z)) / (z * amu)
         frequency = 1_600_000 - 2_000_000 * (moq - 2)
-        values = (f"{a}{element}{z}+", frequency, 0.5, 8.0, 0.2)
+        values = (f"{a}{element}{z}+", frequency, 0.5)
         for column, value in enumerate(values):
             sheet[row, column].set_value(value)
     document.save()

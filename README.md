@@ -34,10 +34,13 @@ print(result.unknown_df)
 export_result_tables(result, "results")
 ```
 
-`p` counts polynomial coefficients; the degree is `p - 1`. ODS input uses
-columns for ion label, centroid frequency, centroid error, width and width
-error, with frequencies in Hz. Supply `harmonic` when input frequencies have
-not been reduced to the fundamental. The time branch returns revolution times
+`p` counts polynomial coefficients; the degree is `p - 1`. ODS input requires
+three columns: ion label, centroid frequency and centroid uncertainty, with
+frequencies in Hz. Fourth and fifth columns may supply RMS width and its
+uncertainty. Widths are optional metadata for inspection; missing or blank
+values remain unavailable and do not enter calibration or mass uncertainties.
+Supply `harmonic` when input frequencies have not been reduced to the fundamental.
+The time branch returns revolution times
 in ps. Isomer excitation energies are supplied separately in MeV.
 
 `python examples/quickstart.py` runs an offline demonstration with public
@@ -119,5 +122,6 @@ python scripts/check_release.py dist/*
 Tests use constructed numerical fixtures and published reference inputs.
 See [CONTRIBUTING.md](CONTRIBUTING.md), [CITATION.cff](CITATION.cff),
 [release instructions](docs/RELEASE.md) and [LICENSE](LICENSE).
-For version 1.0.0, cite [doi:10.5281/zenodo.23501662](https://doi.org/10.5281/zenodo.23501662).
+Versioned releases are archived on [Zenodo](https://doi.org/10.5281/zenodo.23501661);
+use the DOI for the version used in your analysis.
 The license is GPL-3.0-or-later.

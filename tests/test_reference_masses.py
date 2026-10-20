@@ -49,6 +49,52 @@ def reference_run(tmp_path, monkeypatch):
     return ods, calibration, rows, ame
 
 
+@pytest.mark.parametrize("observable", ["frequency", "time"])
+@pytest.mark.parametrize("width_mode", ["omitted", "blank", "wide"])
+def test_width_metadata_does_not_change_calibration_or_replay(reference_run, tmp_path, observable, width_mode):
+    ezodf = pytest.importorskip("ezodf")
+    ods, calibration, rows, _ = reference_run
+    ods = replace(ods, observable=observable)
+    baseline = run_full_calibration_workflow(ods, calibration)
+
+    path = tmp_path / "optional_widths.ods"
+    doc = ezodf.newdoc(doctype="ods", filename=str(path))
+    columns = 3 if width_mode == "omitted" else 5
+    sheet = ezodf.Sheet("Measurements", size=(len(rows) + 1, columns))
+    doc.sheets += sheet
+    for column, value in enumerate(("Label", "frequency", "sigma", "width", "width_sigma")[:columns]):
+        sheet[0, column].set_value(value)
+    for index, row in enumerate(rows, 1):
+        values = (row[17], row[6], row[7])
+        if width_mode == "wide":
+            values += (1e9, 1e8)
+        for column, value in enumerate(values):
+            sheet[index, column].set_value(value)
+    doc.save()
+
+    changed_ods = replace(ods, filename=path)
+    result = run_full_calibration_workflow(changed_ods, calibration)
+    assert result.electronic is not None
+    assert baseline.electronic is not None
+    np.testing.assert_array_equal(result.fit.coeff, baseline.fit.coeff)
+    np.testing.assert_array_equal(result.fit.cov, baseline.fit.cov)
+    np.testing.assert_array_equal(
+        result.electronic.total_mass_covariance_keV2, baseline.electronic.total_mass_covariance_keV2
+    )
+    pd.testing.assert_frame_equal(result.unknown_df, baseline.unknown_df)
+    pd.testing.assert_frame_equal(result.loo_with_sys, baseline.loo_with_sys)
+    if width_mode != "wide":
+        assert np.isnan(result.import_aux["xwidth"]).all()
+        assert np.isnan(result.import_aux["xwidtherr"]).all()
+
+    if width_mode == "omitted":
+        config = tmp_path / "three_column_config.json"
+        save_run_configuration(config, changed_ods, calibration, result)
+        replay = replay_run_configuration(config)
+        assert not replay.warnings and not replay.mismatches
+        pd.testing.assert_frame_equal(replay.result.unknown_df, baseline.unknown_df)
+
+
 def test_parse_and_validate_explicit_units_and_sources():
     values = parse_reference_mass_spec(["206Hg78+=-20000,2 # invented example", "# blank/comment", "72As=-60000,3"])
     assert values["206Hg"] == dict(mass_excess_keV=-20000.0, uncertainty_keV=2.0, source="invented example")

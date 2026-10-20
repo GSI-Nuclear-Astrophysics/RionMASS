@@ -3,7 +3,7 @@
   "description": "Python software for storage-ring mass calibration from frequency and revolution-time observables. Includes reference diagnostics, correlated electronic-input propagation, custom reference masses, GUI results and configuration replay.",
   "creators": [
     {
-      "name": "Freire-Fern\u00e1ndez, David",
+      "name": "Freire-Fernández, David",
       "orcid": "0000-0002-5898-9291"
     }
   ],
@@ -26,5 +26,5 @@
       "resource_type": "software"
     }
   ],
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
