@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite the version of RionMASS used in your analysis."
+type: software
+title: "RionMASS: storage-ring mass calibration and reference diagnostics"
+version: "1.0.0"
+authors:
+  - family-names: "Freire-Fernández"
+    given-names: "David"
+    orcid: "https://orcid.org/0000-0002-5898-9291"
+repository-code: "https://github.com/GSI-Nuclear-Astrophysics/RionMASS"
+url: "https://github.com/GSI-Nuclear-Astrophysics/RionMASS"
+license: "GPL-3.0-or-later"

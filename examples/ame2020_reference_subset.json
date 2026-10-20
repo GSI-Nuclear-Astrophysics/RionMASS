@@ -1,0 +1,41 @@
+{
+  "source": "https://www-nds.iaea.org/amdc/ame2020/mass_1.mas20.txt",
+  "description": "Public AME2020 records used by the illustrative workflow. Observable values are constructed, not measured.",
+  "records": [
+    {
+      "Element": "13C",
+      "Z": 6,
+      "A": 13,
+      "ME (keV)": 3125.00933,
+      "ME_error (keV)": 0.00023
+    },
+    {
+      "Element": "14N",
+      "Z": 7,
+      "A": 14,
+      "ME (keV)": 2863.41683,
+      "ME_error (keV)": 0.00022
+    },
+    {
+      "Element": "15N",
+      "Z": 7,
+      "A": 15,
+      "ME (keV)": 101.43809,
+      "ME_error (keV)": 0.00058
+    },
+    {
+      "Element": "16O",
+      "Z": 8,
+      "A": 16,
+      "ME (keV)": -4737.00217,
+      "ME_error (keV)": 0.0003
+    },
+    {
+      "Element": "18O",
+      "Z": 8,
+      "A": 18,
+      "ME (keV)": -782.81634,
+      "ME_error (keV)": 0.00064
+    }
+  ]
+}

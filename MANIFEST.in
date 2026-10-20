@@ -1,0 +1,15 @@
+include README.md LICENSE CITATION.cff .zenodo.json CHANGELOG.md CONTRIBUTING.md SECURITY.md pyproject.toml
+recursive-include src/rionmass *.py
+include src/rionmass/data/electron_binding_energies.npz
+recursive-include tests *.py
+recursive-include examples *.py *.json *.md
+include docs/API_STABILITY.md docs/SCIENTIFIC_METHOD.md docs/REPRODUCIBILITY.md docs/UNCERTAINTIES.md docs/RELEASE.md
+include scripts/check_release.py
+prune docs/superpowers
+prune notebooks
+prune paper
+prune validation_private
+prune .claude
+prune .superpowers
+global-exclude *.pyc *.pyo *.ods *.xlsx *.ipynb *.log
+global-exclude __pycache__

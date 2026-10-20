@@ -1,0 +1,124 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RionMASS"
+dynamic = ["version"]
+description = "Mass calibration toolkit for time-of-flight and Schottky ring mass measurements of stored ions."
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+    { name = "David Freire-Fernández" },
+]
+keywords = [
+    "mass spectrometry",
+    "nuclear physics",
+    "mass calibration",
+    "storage ring",
+    "Schottky",
+    "time-of-flight",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+# ODS import and AME reference-table access.
+data = [
+    "ezodf>=0.3.2",
+    "lxml>=4.9",  # ezodf's own PyPI metadata does not declare this runtime dependency
+    "fortranformat>=1.0",
+    "requests>=2.31",
+    "beautifulsoup4>=4.12",
+]
+plot = [
+    "matplotlib>=3.7",
+]
+gui = [
+    "ezodf>=0.3.2",
+    "lxml>=4.9",
+    "fortranformat>=1.0",
+    "requests>=2.31",
+    "beautifulsoup4>=4.12",
+    "PySide6>=6.6",
+    "matplotlib>=3.7",
+]
+
+dev = [
+    "RionMASS[data,plot,gui]",
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+    "pyright>=1.1.380",
+    "build>=1.2",
+    "twine>=5",
+    "pre-commit>=3.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/GSI-Nuclear-Astrophysics/RionMASS"
+Repository = "https://github.com/GSI-Nuclear-Astrophysics/RionMASS"
+Issues = "https://github.com/GSI-Nuclear-Astrophysics/RionMASS/issues"
+Changelog = "https://github.com/GSI-Nuclear-Astrophysics/RionMASS/blob/main/CHANGELOG.md"
+
+[project.scripts]
+rionmass = "rionmass.cli:main"
+rionmass-gui = "rionmass.gui.app:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "rionmass.version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rionmass = ["data/electron_binding_energies.npz"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+norecursedirs = ["validation_private", "validation_private.example", "notebooks", "examples", "build", "dist"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = [
+    "notebooks",
+    "validation_private",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "NPY", "RUF"]
+ignore = [
+    "E741",  # Allow standard mathematical variable names.
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["RUF"]
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/__pycache__", "validation_private", "validation_private.example", "build", "dist"]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+reportMissingImports = true
+reportUnusedFunction = false

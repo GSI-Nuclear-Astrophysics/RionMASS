@@ -1,0 +1,30 @@
+{
+  "title": "RionMASS: Toolkit for mass measurements of ringed ions",
+  "description": "Python software for storage-ring mass calibration from frequency and revolution-time observables. Includes reference diagnostics, correlated electronic-input propagation, custom reference masses, GUI results and configuration replay.",
+  "creators": [
+    {
+      "name": "Freire-Fern\u00e1ndez, David",
+      "orcid": "0000-0002-5898-9291"
+    }
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "mass spectrometry",
+    "nuclear physics",
+    "mass calibration",
+    "storage ring",
+    "Schottky mass spectrometry",
+    "time-of-flight mass spectrometry",
+    "atomic mass evaluation"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/GSI-Nuclear-Astrophysics/RionMASS",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ],
+  "version": "1.0.0"
+}

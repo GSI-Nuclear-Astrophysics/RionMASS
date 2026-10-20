@@ -1,0 +1,75 @@
+# Python and packaging
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+*.whl
+.installed.cfg
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+env/
+
+# Test, type-checker, and linter caches
+.pytest_cache/
+.ruff_cache/
+.pyright/
+.mypy_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Private experimental data and derived outputs
+/validation_private/
+*.ame-cache/
+.ame/
+mass_calibration_reviewed_outputs/
+*_reviewed_outputs/
+
+# Local measurement and reference inputs
+/*.ods
+/*.dat
+rev_*.txt
+
+# Local analysis notebooks
+*.ipynb
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# LaTeX build artifacts
+paper/main.aux
+paper/main.bbl
+paper/main.blg
+paper/main.fdb_latexmk
+paper/main.fls
+paper/main.log
+paper/main.out
+paper/main.pdf
+paper/main.spl
+paper/main.toc
+paper/main.synctex.gz
+
+# Local research notes and manuscript
+/docs/superpowers/
+/docs/NOTEBOOK_TO_PACKAGE_MIGRATION.md
+/docs/OPEN_SCIENTIFIC_QUESTIONS.md
+/docs/SOFTWARE_PUBLICATION_READINESS.md
+/paper/
+/notebooks/
+/.claude/
+/.superpowers/
+/validation_private.example/
+/docker/run_validation.sh
