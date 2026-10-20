@@ -4,6 +4,7 @@ type: software
 title: "RionMASS: Toolkit for mass measurements of ringed ions"
 version: "1.0.1"
 date-released: "2026-10-20"
+doi: "10.5281/zenodo.23506012"
 authors:
   - family-names: "Freire-Fernández"
     given-names: "David"
