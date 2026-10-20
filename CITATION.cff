@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "Please cite the version of RionMASS used in your analysis."
 type: software
-title: "RionMASS: storage-ring mass calibration and reference diagnostics"
+title: "RionMASS: Toolkit for mass measurements of ringed ions"
 version: "1.0.0"
 date-released: "2026-10-20"
 doi: "10.5281/zenodo.23501662"

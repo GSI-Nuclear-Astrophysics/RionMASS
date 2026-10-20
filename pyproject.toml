@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "RionMASS"
 dynamic = ["version"]
-description = "Mass calibration toolkit for time-of-flight and Schottky ring mass measurements of stored ions."
+description = "Toolkit for mass measurements of ringed ions."
 readme = "README.md"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
