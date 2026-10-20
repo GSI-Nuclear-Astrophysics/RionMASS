@@ -119,4 +119,5 @@ python scripts/check_release.py dist/*
 Tests use constructed numerical fixtures and published reference inputs.
 See [CONTRIBUTING.md](CONTRIBUTING.md), [CITATION.cff](CITATION.cff),
 [release instructions](docs/RELEASE.md) and [LICENSE](LICENSE).
+For version 1.0.0, cite [doi:10.5281/zenodo.23501662](https://doi.org/10.5281/zenodo.23501662).
 The license is GPL-3.0-or-later.

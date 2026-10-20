@@ -3,6 +3,8 @@ message: "Please cite the version of RionMASS used in your analysis."
 type: software
 title: "RionMASS: storage-ring mass calibration and reference diagnostics"
 version: "1.0.0"
+date-released: "2026-10-20"
+doi: "10.5281/zenodo.23501662"
 authors:
   - family-names: "Freire-Fernández"
     given-names: "David"
